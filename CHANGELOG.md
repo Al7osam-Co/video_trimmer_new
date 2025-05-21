@@ -1,3 +1,8 @@
+## 3.0.4
+
+* moved to ffmpeg_kit_flutter_new 
+
+
 ## 3.0.3
 
 * All libraries upgraded to latest versions
