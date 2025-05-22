@@ -1,6 +1,10 @@
 ## 3.0.4
 
-* moved to ffmpeg_kit_flutter_new 
+* updated ffmpeg_kit_flutter_new to V1.6.1
+
+## 3.0.4
+
+* moved to ffmpeg_kit_flutter_new : 1.6.0
 
 
 ## 3.0.3
