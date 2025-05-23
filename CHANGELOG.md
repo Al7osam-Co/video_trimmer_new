@@ -1,4 +1,4 @@
-## 3.0.4
+## 3.0.5
 
 * updated ffmpeg_kit_flutter_new to V1.6.1
 
