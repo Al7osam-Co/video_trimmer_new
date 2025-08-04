@@ -14,8 +14,9 @@ dependencies:
   flutter_video_trimmer:
     path: ../
 
-  video_player: ^2.7.2
-  file_picker: ^5.5.0
+  video_player: ^2.10.0
+  file_picker: ^10.2.1
+  ffmpeg_kit_flutter_new: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.1

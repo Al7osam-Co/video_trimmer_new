@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:example/preview.dart';
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_video_trimmer/flutter_video_trimmer.dart';
 
@@ -8,12 +9,13 @@ class TrimmerView extends StatefulWidget {
   final File file;
 
   const TrimmerView(this.file, {Key? key}) : super(key: key);
+
   @override
   State<TrimmerView> createState() => _TrimmerViewState();
 }
 
 class _TrimmerViewState extends State<TrimmerView> {
-  final Trimmer _trimmer = Trimmer();
+  final Trimmer _trimmer = Trimmer(runCommand: (cmd) => FFmpegKit.execute(cmd),);
 
   double _startValue = 0.0;
   double _endValue = 0.0;
@@ -109,8 +111,7 @@ class _TrimmerViewState extends State<TrimmerView> {
                       ),
                       onChangeStart: (value) => _startValue = value,
                       onChangeEnd: (value) => _endValue = value,
-                      onChangePlaybackState: (value) =>
-                          setState(() => _isPlaying = value),
+                      onChangePlaybackState: (value) => setState(() => _isPlaying = value),
                     ),
                   ),
                 ),
