@@ -1,5 +1,5 @@
 ## 3.1.0
-
+### Breaking Changes
 * Introduced `FFMpegExecutor` typedef: `typedef FFMpegExecutor = Future<void> Function(String command);`
 * `Trimmer` constructor now requires `runCommand`, which lets you inject any FFmpeg executor of your choice.
 * This enables compatibility with multiple FFmpeg variants that user prefers:
@@ -8,7 +8,6 @@
   - ffmpeg_kit_flutter_new_full
   - or even mocks for testing
 
-### Breaking Changes
 - Removed hardcoded dependency on `ffmpeg_kit_flutter`.
 - Consumers must now explicitly pass an FFmpeg command executor to `Trimmer` like below:
   ```dart
