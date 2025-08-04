@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
-import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+// import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
+// import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit_config.dart';
+// import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:path/path.dart';
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,9 @@ import 'package:flutter_video_trimmer/src/utils/storage_dir.dart';
 
 enum TrimmerEvent { initialized }
 
+/// A typedef for injecting the desired FFmpeg command executor.
+typedef FFMpegExecutor = Future<void> Function(String command);
+
 /// Helps in loading video from file, saving trimmed video to a file
 /// and gives video playback controls. Some of the helpful methods
 /// are:
@@ -22,6 +25,10 @@ enum TrimmerEvent { initialized }
 /// * [videoPlaybackControl()]
 class Trimmer {
   // final FlutterFFmpeg _flutterFFmpeg = FFmpegKit();
+  /// Function that will be used to run FFmpeg commands.
+  final FFMpegExecutor runCommand;
+
+  Trimmer({required this.runCommand});
 
   final StreamController<TrimmerEvent> _controller =
       StreamController<TrimmerEvent>.broadcast();
@@ -247,23 +254,32 @@ class Trimmer {
 
     command += '"$outputPath"';
 
-    FFmpegKit.executeAsync(command, (session) async {
-      final state =
-          FFmpegKitConfig.sessionStateToString(await session.getState());
-      final returnCode = await session.getReturnCode();
-
-      debugPrint("FFmpeg process exited with state $state and rc $returnCode");
-
-      if (ReturnCode.isSuccess(returnCode)) {
-        debugPrint("FFmpeg processing completed successfully.");
-        debugPrint('Video successfully saved');
-        onSave(outputPath);
-      } else {
-        debugPrint("FFmpeg processing failed.");
-        debugPrint('Couldn\'t save the video');
-        onSave(null);
-      }
-    });
+    try {
+      await runCommand(command);
+      debugPrint("FFmpeg processing completed successfully.");
+      debugPrint('Video successfully saved');
+      onSave(outputPath);
+    } catch (e) {
+      debugPrint("FFmpeg processing failed: $e");
+      onSave(null);
+    }
+    // FFmpegKit.executeAsync(command, (session) async {
+    //   final state =
+    //       FFmpegKitConfig.sessionStateToString(await session.getState());
+    //   final returnCode = await session.getReturnCode();
+    //
+    //   debugPrint("FFmpeg process exited with state $state and rc $returnCode");
+    //
+    //   if (ReturnCode.isSuccess(returnCode)) {
+    //     debugPrint("FFmpeg processing completed successfully.");
+    //     debugPrint('Video successfully saved');
+    //     onSave(outputPath);
+    //   } else {
+    //     debugPrint("FFmpeg processing failed.");
+    //     debugPrint('Couldn\'t save the video');
+    //     onSave(null);
+    //   }
+    // });
 
     // return _outputPath;
   }
