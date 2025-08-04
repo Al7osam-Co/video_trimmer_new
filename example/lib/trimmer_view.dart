@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:example/preview.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Preview;
 import 'package:flutter_video_trimmer/flutter_video_trimmer.dart';
 
 class TrimmerView extends StatefulWidget {
