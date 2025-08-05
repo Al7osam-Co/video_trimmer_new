@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:example/preview.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:flutter/material.dart' hide Preview;
 import 'package:flutter_video_trimmer/flutter_video_trimmer.dart';
 
@@ -17,18 +16,7 @@ class TrimmerView extends StatefulWidget {
 
 class _TrimmerViewState extends State<TrimmerView> {
   final Trimmer _trimmer = Trimmer(
-      runCommand: (cmd) async {
-        final session = await FFmpegKit.execute(cmd);
-        final returnCode = await session.getReturnCode();
-
-        if (ReturnCode.isSuccess(returnCode)) {
-          print("✅ FFmpeg command executed successfully.");
-          // return true;
-        } else {
-          print("❌ FFmpeg command failed.");
-          // return false;
-        }
-      }
+    runCommand: (cmd) => FFmpegKit.execute(cmd),
   );
 
   double _startValue = 0.0;
