@@ -34,15 +34,15 @@ class _TrimmerViewState extends State<TrimmerView> {
     _trimmer.loadVideo(videoFile: widget.file);
   }
 
-  _saveVideo() {
+  _saveVideo() async {
     setState(() {
       _progressVisibility = true;
     });
 
-    _trimmer.saveTrimmedVideo(
+    await _trimmer.saveTrimmedVideo(
       startValue: _startValue,
       endValue: _endValue,
-      onSave: (outputPath) {
+      onSave: (outputPath) async {
         setState(() {
           _progressVisibility = false;
         });
